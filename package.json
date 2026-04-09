@@ -1,0 +1,23 @@
+{
+  "name": "spotify-discord-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node auth.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@discordjs/rest": "^2.6.1",
+    "axios": "^1.15.0",
+    "discord-api-types": "^0.38.44",
+    "discord.js": "^14.26.2",
+    "dotenv": "^17.4.1",
+    "express": "^5.2.1",
+    "open": "^11.0.0"
+  }
+}
