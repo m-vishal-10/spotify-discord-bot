@@ -10,9 +10,10 @@ const client = new Client({
     GatewayIntentBits.GuildMessages
   ]
 });
+const BASE_URL = process.env.BASE_URL;
 
 async function getToken(userId) {
-  const res = await axios.get(`http://127.0.0.1:3000/token/${userId}`);
+  const res = await axios.get(`${BASE_URL}/token/${userId}`);
   return res.data;
 }
 
@@ -24,7 +25,7 @@ client.on("interactionCreate", async (interaction) => {
   try {
     // 🔐 LOGIN
     if (interaction.commandName === "login") {
-      const url = `http://127.0.0.1:3000/login?userId=${userId}`;
+      const url = `${BASE_URL}/login?userId=${userId}`;
       return interaction.reply(`🔐 Login here: ${url}`);
     }
 
@@ -98,9 +99,14 @@ client.on("interactionCreate", async (interaction) => {
     }
 
   } catch (e) {
-    console.error("ERROR:", e.response?.data || e.message);
-    interaction.reply(`❌ ${JSON.stringify(e.response?.data || e.message)}`);
+  console.error("ERROR:", e.response?.data || e.message);
+
+  if (interaction.replied || interaction.deferred) {
+    await interaction.followUp(`❌ ${JSON.stringify(e.response?.data || e.message)}`);
+  } else {
+    await interaction.reply(`❌ ${JSON.stringify(e.response?.data || e.message)}`);
   }
+}
 });
 
 client.login(process.env.DISCORD_TOKEN);
